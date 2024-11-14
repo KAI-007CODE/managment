@@ -11,6 +11,98 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS EMPLOYEE (
 myconn.commit()
 cursor.execute('CREATE TABLE IF NOT EXISTS MEDICINES(ID INT PRIMARY KEY, NAME VARCHAR (100),PRICE INT,QUANTITY INT)')
 myconn.commit()
+cursor.execute('CREATE TABLE IF NOT EXISTS SUPPLIERS(ID INT PRIMARY KEY, NAME VARCHAR (100), ADDRESS VARCHAR (255), PHONE_NUMBER INT)')
+myconn.commit()
+cursor.execute('CREATE TABLE IF NOT EXISTS BILLS(UID INT PRIMARY KEY, NAME VARCHAR(255), TOTAL_AMOUNT INT)')
+myconn.commit()
+
+def suppliers():
+     print("1.ADD SUPPLIERS")
+     print("2.DELETE SUPPLIERS")
+     print("3.UPDATE SUPPLIERS")
+     print("4.VIEW SUPPLIERS")
+     print("5.EXIT")
+     chr=int(input("Enter your choice: "))
+     if chr==1:
+          id= int(input("enter supplier id"))
+          name=input("enter supplier name")
+          address=input("enter supplier address")
+          phone_number=int(input("enter supplier phone number"))
+          sql=cursor.execute("insert into SUPPLIERS (ID , NAME, ADDRESS, PHONE_NUMBER ) VALUES ({},'{}', '{}', {})".format(id, name, address, phone_number))
+          cursor.execute(sql)
+          myconn.commit()
+          print('supplier details add succesfully')
+          suppliers()
+     if chr==2:
+          id = int(input('enter supplier id you want to delete: '))
+          sql = cursor.execute("delete from SUPPLIERS where ID=%s",(id,))
+          myconn.commit()
+          print('supplier deleted succesfully')
+          suppliers()
+     if chr==3:
+          id = int(input("enter supplier id you want to update: "))
+          name = input ("enter the updated supplier name: ")
+          address = input("enter the updated supplier address: ")
+          phone_number = int(input("enter the updated supplier phone number: "))
+          sql=cursor.execute("UPDATE SUPPLIERS SET NAME=%s, ADDRESS=%s, PHONE_NUMBER=%s WHERE ID=%s",(name, address, phone_number, id))
+          myconn.commit()
+          print('supplier details updated succesfully')
+          suppliers()
+     if chr==4:
+          sql=cursor.execute("SELECT * FROM SUPPLIERS")
+          rows=cursor.fetchall()
+          for row in rows:
+              print(row)
+          suppliers()
+     if chr==5:
+          print('GOING BACK TO MAIN MENU')
+          main()
+     else:
+          print("INVALID CHOICE")
+          suppliers()
+
+def bills():
+     print("1.ADD BILLS")
+     print("2.DELETE BILLS")
+     print("3.UPDATE BILLS")
+     print("4.VIEW BILLS")
+     print("5. EXIT")
+     chr = int(input("Enter your choice: "))
+     if chr==1:
+          id = int(input("enter bill id"))
+          name=input("enter customer name")
+          amount=int(input("enter bill amount"))
+          sql=cursor.execute("insert into BILLS (UID , NAME, TOTAL_AMOUNT ) VALUES ({},'{}', {})".format(id, name, amount))
+          cursor.execute(sql)
+          myconn.commit()
+          print('bill details add succesfully')
+          bills()
+     if chr==2:
+          id = int(input('enter bill id you want to delete: '))
+          sql = cursor.execute("delete from BILLS where UID=%s",(id,))
+          myconn.commit()
+          print('bill deleted succesfully')
+          bills()
+     if chr==3:
+          id = int(input("enter bill id you want to update: "))
+          name = input ("enter the updated customer name: ")
+          amount = int(input("enter the updated bill amount: "))
+          sql=cursor.execute("UPDATE BILLS SET NAME=%s, TOTAL_AMOUNT=%s WHERE UID=%s",(name, amount, id))
+          myconn.commit()
+          print('bill details updated succesfully')
+          bills()
+     if chr==4:
+          sql=cursor.execute("SELECT * FROM BILLS")
+          rows=cursor.fetchall()
+          for row in rows:
+              print(row)
+          bills()
+     if chr==5:
+          print('GOING BACK TO MAIN MENU')
+          main()
+     else:
+          print("INVALID CHOICE")
+          bills()
 
 def employee():
      
@@ -106,17 +198,23 @@ def medicine():
 
 def main():
      print("1. EMPLOYEE ")
-     print("2. MESICINE ")
-     print("3. EXIT")
+     print("2. MEDICINE ")
+     print("3. SUPPLIERS ")
+     print("4. BILLS ")
+     print("5. EXIT")
      choice=int(input("Enter your choice: "))
      if choice==1:
           employee()
      elif choice==2:
           medicine()
      elif choice==3:
+          suppliers()
+     elif choice==4:
+          bills()
+     elif choice==5:
           print("exiting...")
+          quit("""thanks for using medicine management system""")
      else:
           print("Invalid choice")
-          quit("""thanks for using medicine management system""")
-          
+          main()
 main()

@@ -16,6 +16,7 @@ myconn.commit()
 cursor.execute('CREATE TABLE IF NOT EXISTS BILLS(UID INT PRIMARY KEY, NAME VARCHAR(255), TOTAL_AMOUNT INT)')
 myconn.commit()
 
+#added suppliers data
 def suppliers():
      print("1.ADD SUPPLIERS")
      print("2.DELETE SUPPLIERS")
@@ -61,6 +62,7 @@ def suppliers():
           print("INVALID CHOICE")
           suppliers()
 
+#added bills data
 def bills():  
      print("1.ADD BILLS")
      print("2.DELETE BILLS")
@@ -104,6 +106,7 @@ def bills():
           print("INVALID CHOICE")
           bills()
 
+#added employee data
 def employee():
      
           print("1. ADD EMPLOYEE ")
@@ -150,6 +153,7 @@ def employee():
                print("Invalid choice")
                employee()
 
+#added medicine data
 def medicine():
     
           print("1.ADD MEDICINE ")
@@ -196,6 +200,7 @@ def medicine():
                print("invalid choice")
                medicine()
 
+#defining main function which will run the program
 def main():
      print("1. EMPLOYEE ")
      print("2. MEDICINE ")

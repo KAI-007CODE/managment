@@ -117,5 +117,6 @@ def main():
           print("exiting...")
      else:
           print("Invalid choice")
+          quit("""thanks for using medicine management system""")
           
 main()

@@ -54,8 +54,6 @@ def suppliers():
           sql=cursor.execute("SELECT * FROM SUPPLIERS")
           columns=[col[0] for col in cursor.description]
           rows=cursor.fetchall()
-          # for row in rows:
-          #     print(row)
           print(tabulate(rows,headers=columns,tablefmt="grid"))
           suppliers()
      if chr==5:
@@ -98,13 +96,8 @@ def bills():
           bills()
      if chr==4:
           sql=cursor.execute("SELECT * FROM BILLS")
-          # rows=cursor.fetchall()
-          # for row in rows:
-          #     print(row)
           columns=[col[0] for col in cursor.description]
           rows=cursor.fetchall()
-          # for row in rows:
-          #     print(row)
           print(tabulate(rows,headers=columns,tablefmt="grid"))
           bills()
      if chr==5:
@@ -152,8 +145,6 @@ def employee():
                sql=cursor.execute("SELECT * FROM EMPLOYEE")
                columns =[col[0] for col in cursor.description]
                rows=cursor.fetchall()
-               # for row in rows:
-               #  print(row)
                print(tabulate(rows,headers=columns,tablefmt="grid"))
                employee()
           if chr==5:
@@ -199,13 +190,8 @@ def medicine():
                medicine()
           if chr==4:
                sql=cursor.execute("SELECT * FROM MEDICINES")
-               # rows=cursor.fetchall()
-               # for row in rows:
-               #  print(row)
                columns=[col[0] for col in cursor.description]
                rows=cursor.fetchall()
-               # for row in rows:
-               #     print(row)
                print(tabulate(rows,headers=columns,tablefmt="grid"))
                medicine()
           if chr==5:

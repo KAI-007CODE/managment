@@ -1,5 +1,6 @@
 import mysql.connector as sqltor
 from tabulate import tabulate
+import time
 myconn = sqltor.connect(user='root', password='arindam ak', host='127.0.0.1')
 cursor= myconn.cursor()
 cursor.execute('CREATE DATABASE  IF NOT EXISTS mydatabase')
@@ -34,12 +35,14 @@ def suppliers():
           cursor.execute(sql)
           myconn.commit()
           print('supplier details add succesfully')
+          time.sleep(3)
           suppliers()
      if chr==2:
           id = int(input('enter supplier id you want to delete: '))
           sql = cursor.execute("delete from SUPPLIERS where ID=%s",(id,))
           myconn.commit()
           print('supplier deleted succesfully')
+          time.sleep(3)
           suppliers()
      if chr==3:
           id = int(input("enter supplier id you want to update: "))
@@ -49,12 +52,14 @@ def suppliers():
           sql=cursor.execute("UPDATE SUPPLIERS SET NAME=%s, ADDRESS=%s, PHONE_NUMBER=%s WHERE ID=%s",(name, address, phone_number, id))
           myconn.commit()
           print('supplier details updated succesfully')
+          time.sleep(3)
           suppliers()
      if chr==4:
           sql=cursor.execute("SELECT * FROM SUPPLIERS")
           columns=[col[0] for col in cursor.description]
           rows=cursor.fetchall()
           print(tabulate(rows,headers=columns,tablefmt="grid"))
+          time.sleep(5)
           suppliers()
      if chr==5:
           print('GOING BACK TO MAIN MENU')
@@ -79,12 +84,14 @@ def bills():
           cursor.execute(sql)
           myconn.commit()
           print('bill details add succesfully')
+          time.sleep(3)
           bills()
      if chr==2:
           id = int(input('enter bill id you want to delete: '))
           sql = cursor.execute("delete from BILLS where UID=%s",(id,))
           myconn.commit()
           print('bill deleted succesfully')
+          time.sleep(3)
           bills()
      if chr==3:
           id = int(input("enter bill id you want to update: "))
@@ -93,12 +100,14 @@ def bills():
           sql=cursor.execute("UPDATE BILLS SET NAME=%s, TOTAL_AMOUNT=%s WHERE UID=%s",(name, amount, id))
           myconn.commit()
           print('bill details updated succesfully')
+          time.sleep(3)
           bills()
      if chr==4:
           sql=cursor.execute("SELECT * FROM BILLS")
           columns=[col[0] for col in cursor.description]
           rows=cursor.fetchall()
           print(tabulate(rows,headers=columns,tablefmt="grid"))
+          time.sleep(5)
           bills()
      if chr==5:
           print('GOING BACK TO MAIN MENU')
@@ -125,12 +134,14 @@ def employee():
                cursor.execute(sql)
                myconn.commit()
                print('employee details add succesfully')
+               time.sleep(3)
                employee()
           if chr==2:
                id = int(input('enter employee id you want to delete: '))
                sql = cursor.execute("delete from EMPLOYEE where EMPLOYEE_ID=%s",(id,))
                myconn.commit()
                print('employee deleted succesfully')
+               time.sleep(3)
                employee()
           if chr==3:
                id = int(input("enter employee id you want to update: "))
@@ -140,12 +151,14 @@ def employee():
                sql=cursor.execute("UPDATE EMPLOYEE SET NAME=%s, SALARY=%s, DEPARTMENT=%s WHERE EMPLOYEE_ID=%s",(name, salary, department, id))
                myconn.commit()
                print('employee details updated succesfully')
+               time.sleep(3)
                employee()
           if chr==4:
                sql=cursor.execute("SELECT * FROM EMPLOYEE")
                columns =[col[0] for col in cursor.description]
                rows=cursor.fetchall()
                print(tabulate(rows,headers=columns,tablefmt="grid"))
+               time.sleep(5)
                employee()
           if chr==5:
                print("exiting...")
@@ -172,12 +185,14 @@ def medicine():
                cursor.execute(sql)
                myconn.commit()
                print('medicine details add succesfully')
+               time.sleep(3)
                medicine()
           if chr==2:
                id = int(input('enter medicine id you want to delete: '))
                sql = cursor.execute("delete from medicines where id=%s",(id,))
                myconn.commit()
                print('medicine deleted succesfully')
+               time.sleep(3)
                medicine()
           if chr==3:
                id = int(input("enter medicine id you wnat to update: "))
@@ -187,12 +202,14 @@ def medicine():
                sql=cursor.execute("UPDATE MEDICINES SET NAME=%s, PRICE=%s, QUANTITY=%s WHERE ID=%s",(name, price, quantity, id))
                myconn.commit()
                print('medicine details updated succesfully')
+               time.sleep(3)
                medicine()
           if chr==4:
                sql=cursor.execute("SELECT * FROM MEDICINES")
                columns=[col[0] for col in cursor.description]
                rows=cursor.fetchall()
                print(tabulate(rows,headers=columns,tablefmt="grid"))
+               time.sleep(5)
                medicine()
           if chr==5:
                print("exiting the program")

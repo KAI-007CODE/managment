@@ -214,7 +214,7 @@ def medicine():
                print(Fore.WHITE+(tabulate(rows,headers=columns,tablefmt="grid")))
                time.sleep(5)
                medicine()
-          if chr==5:
+          if chr=='5':
                print(Fore.YELLOW+"\033[1mExiting the program\033[0m")
                main()
           else : 

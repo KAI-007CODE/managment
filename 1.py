@@ -1,6 +1,9 @@
 import mysql.connector as sqltor
 from tabulate import tabulate
 import time
+from colorama import Fore,Style,init
+
+init()
 myconn = sqltor.connect(user='root', password='arindam ak', host='127.0.0.1')
 cursor= myconn.cursor()
 cursor.execute('CREATE DATABASE  IF NOT EXISTS mydatabase')
@@ -20,14 +23,14 @@ myconn.commit()
 
 #added suppliers data
 def suppliers():
-     print("1.ADD SUPPLIERS")
-     print("2.DELETE SUPPLIERS")
-     print("3.UPDATE SUPPLIERS")
-     print("4.VIEW SUPPLIERS")
-     print("5.EXIT")
-     chr=input("Enter your choice: ")
+     print(Fore.RED+"1.ADD SUPPLIERS")
+     print(Fore.RED+"2.DELETE SUPPLIERS")
+     print(Fore.RED+"3.UPDATE SUPPLIERS")
+     print(Fore.RED+"4.VIEW SUPPLIERS")
+     print(Fore.RED+"5.EXIT")
+     chr=input(Fore.GREEN+"Enter your choice: ")
      if chr=='1':
-          id= int(input("enter supplier id: "))
+          id= int(input(Fore.YELLOW+"enter supplier id: "))
           name=input("enter supplier name: ")
           address=input("enter supplier address: ")
           phone_number=int(input("enter supplier phone number: "))
@@ -38,14 +41,14 @@ def suppliers():
           time.sleep(3)
           suppliers()
      if chr=='2':
-          id = int(input('enter supplier id you want to delete: '))
+          id = int(input(Fore.YELLOW+'enter supplier id you want to delete: '))
           sql = cursor.execute("delete from SUPPLIERS where ID=%s",(id,))
           myconn.commit()
           print('supplier deleted succesfully')
           time.sleep(3)
           suppliers()
      if chr=='3':
-          id = int(input("enter supplier id you want to update: "))
+          id = int(input(Fore.YELLOW+"enter supplier id you want to update: "))
           name = input ("enter the updated supplier name: ")
           address = input("enter the updated supplier address: ")
           phone_number = int(input("enter the updated supplier phone number: "))
@@ -58,26 +61,26 @@ def suppliers():
           sql=cursor.execute("SELECT * FROM SUPPLIERS")
           columns=[col[0] for col in cursor.description]
           rows=cursor.fetchall()
-          print(tabulate(rows,headers=columns,tablefmt="grid"))
+          print(Fore.RESET+(tabulate(rows,headers=columns,tablefmt="grid")))
           time.sleep(5)
           suppliers()
      if chr=='5':
-          print('GOING BACK TO MAIN MENU')
+          print(Fore.YELLOW+'\033[1mGOING BACK TO MAIN MENU\033[0m')
           main()
      else:
-          print("INVALID CHOICE")
+          print(Fore.RED+"\033[1mINVALID CHOICE\033[0m")
           suppliers()
 
 #added bills data
 def bills():  
-     print("1.ADD BILLS")
-     print("2.DELETE BILLS")
-     print("3.UPDATE BILLS")
-     print("4.VIEW BILLS")
-     print("5. EXIT")
-     chr = input("Enter your choice: ")
+     print(Fore.RED+"1.ADD BILLS")
+     print(Fore.RED+"2.DELETE BILLS")
+     print(Fore.RED+"3.UPDATE BILLS")
+     print(Fore.RED+"4.VIEW BILLS")
+     print(Fore.RED+"5. EXIT")
+     chr = input(Fore.GREEN+"Enter your choice: ")
      if chr=='1':
-          id = int(input("enter bill id: "))
+          id = int(input(Fore.YELLOW+"enter bill id: "))
           name=input("enter customer name: ")
           amount=int(input("enter bill amount: "))
           sql=cursor.execute("insert into BILLS (UID , NAME, TOTAL_AMOUNT ) VALUES ({},'{}', {})".format(id, name, amount))
@@ -87,14 +90,14 @@ def bills():
           time.sleep(3)
           bills()
      if chr=='2':
-          id = int(input('enter bill id you want to delete: '))
+          id = int(input(Fore.YELLOW+'enter bill id you want to delete: '))
           sql = cursor.execute("delete from BILLS where UID=%s",(id,))
           myconn.commit()
           print('bill deleted succesfully')
           time.sleep(3)
           bills()
      if chr=='3':
-          id = int(input("enter bill id you want to update: "))
+          id = int(input(Fore.YELLOW+"enter bill id you want to update: "))
           name = input ("enter the updated customer name: ")
           amount = int(input("enter the updated bill amount: "))
           sql=cursor.execute("UPDATE BILLS SET NAME=%s, TOTAL_AMOUNT=%s WHERE UID=%s",(name, amount, id))
@@ -106,27 +109,27 @@ def bills():
           sql=cursor.execute("SELECT * FROM BILLS")
           columns=[col[0] for col in cursor.description]
           rows=cursor.fetchall()
-          print(tabulate(rows,headers=columns,tablefmt="grid"))
+          print(Fore.WHITE+(tabulate(rows,headers=columns,tablefmt="grid")))
           time.sleep(5)
           bills()
      if chr=='5':
-          print('GOING BACK TO MAIN MENU')
+          print(Fore.YELLOW+'\033[1mGOING BACK TO MAIN MENU\033[0m')
           main()
      else:
-          print("INVALID CHOICE")
+          print(Fore.RED+"\033[1mINVALID CHOICE\033[0m")
           bills()
 
 #added employee data
 def employee():
      
-          print("1. ADD EMPLOYEE ")
-          print("2. DELETE EMPLOYEE ")
-          print("3. UPDATE EMPLOYEE ")
-          print("4. VIEW ALL EMPLOYEE ")
-          print("5. EXIT")
-          chr=input("Enter your choice: ")
+          print(Fore.RED+"1. ADD EMPLOYEE ")
+          print(Fore.RED+"2. DELETE EMPLOYEE ")
+          print(Fore.RED+"3. UPDATE EMPLOYEE ")
+          print(Fore.RED+"4. VIEW ALL EMPLOYEE ")
+          print(Fore.RED+"5. EXIT")
+          chr=input(Fore.GREEN+"Enter your choice: ")
           if chr=='1':
-               id=int(input("enter employee id: "))
+               id=int(input(Fore.YELLOW+"enter employee id: "))
                name=input("enter employee name: ")
                salary=int(input("enter employee salary: "))
                department=input("enter employee department: ")
@@ -137,14 +140,14 @@ def employee():
                time.sleep(3)
                employee()
           if chr=='2':
-               id = int(input('enter employee id you want to delete: '))
+               id = int(input(Fore.YELLOW+'enter employee id you want to delete: '))
                sql = cursor.execute("delete from EMPLOYEE where EMPLOYEE_ID=%s",(id,))
                myconn.commit()
                print('employee deleted succesfully')
                time.sleep(3)
                employee()
           if chr=='3':
-               id = int(input("enter employee id you want to update: "))
+               id = int(input(Fore.YELLOW+"enter employee id you want to update: "))
                name = input ("enter the updated employee name: ")
                salary = int(input("enter the updated employee salary: "))
                department = input("enter the updated employee department: ")
@@ -157,27 +160,27 @@ def employee():
                sql=cursor.execute("SELECT * FROM EMPLOYEE")
                columns =[col[0] for col in cursor.description]
                rows=cursor.fetchall()
-               print(tabulate(rows,headers=columns,tablefmt="grid"))
+               print(Fore.RESET+(tabulate(rows,headers=columns,tablefmt="grid")))
                time.sleep(5)
                employee()
           if chr=='5':
-               print("exiting...")
+               print(Fore.YELLOW+"\033[1mEXITING...\033[0m")
                main()
           else:
-               print("Invalid choice")
+               print(Fore.RED+"\033[1mInvalid choice\033[0m")
                employee()
 
 #added medicine data
 def medicine():
     
-          print("1.ADD MEDICINE ")
-          print("2.DELETE MEDICINE ")
-          print("3.UPDATE MEDICINE ")
-          print("4.VIEW ALL MEDICINE ")
-          print("5.EXIT")
-          chr=input("Enter your choice: ")
+          print(Fore.RED+"1.ADD MEDICINE ")
+          print(Fore.RED+"2.DELETE MEDICINE ")
+          print(Fore.RED+"3.UPDATE MEDICINE ")
+          print(Fore.RED+"4.VIEW ALL MEDICINE ")
+          print(Fore.RED+"5.EXIT")
+          chr=input(Fore.GREEN+"Enter your choice: ")
           if chr=='1':
-               id=int(input("enter medicine id: "))
+               id=int(input(Fore.YELLOW+"enter medicine id: "))
                name=input("enter medicine name: ")
                price=float(input("enter medicine price: "))
                quantity=int(input("enter medicine quantity: "))
@@ -188,14 +191,14 @@ def medicine():
                time.sleep(3)
                medicine()
           if chr=='2':
-               id = int(input('enter medicine id you want to delete: '))
+               id = int(input(Fore.YELLOW+'enter medicine id you want to delete: '))
                sql = cursor.execute("delete from medicines where id=%s",(id,))
                myconn.commit()
                print('medicine deleted succesfully')
                time.sleep(3)
                medicine()
           if chr=='3':
-               id = int(input("enter medicine id you wnat to update: "))
+               id = int(input(Fore.YELLOW+"enter medicine id you wnat to update: "))
                name =input ("enter the updated medicine name: ")
                price =float(input("enter the updated medicine price: "))
                quantity =int(input("enter the updated maedicne quantity: "))
@@ -208,23 +211,23 @@ def medicine():
                sql=cursor.execute("SELECT * FROM MEDICINES")
                columns=[col[0] for col in cursor.description]
                rows=cursor.fetchall()
-               print(tabulate(rows,headers=columns,tablefmt="grid"))
+               print(Fore.WHITE+(tabulate(rows,headers=columns,tablefmt="grid")))
                time.sleep(5)
                medicine()
           if chr==5:
-               print("exiting the program")
+               print(Fore.YELLOW+"\033[1mExiting the program\033[0m")
                main()
           else : 
-               print("invalid choice")
+               print(Fore.RED+"\033[1mInvalid choice\033[0m")
                medicine()
 
 #defining main function which will run the program
 def main():
-     print("1. EMPLOYEE ")
-     print("2. MEDICINE ")
-     print("3. SUPPLIERS ")
-     print("4. BILLS ")
-     print("5. EXIT")
+     print(Fore.GREEN+"1. EMPLOYEE ")
+     print(Fore.GREEN+"2. MEDICINE ")
+     print(Fore.GREEN+"3. SUPPLIERS ")
+     print(Fore.GREEN+"4. BILLS ")
+     print(Fore.GREEN+"5. EXIT")
      choice=input("Enter your choice: ")
      if choice=='1':
           employee()
@@ -235,9 +238,9 @@ def main():
      elif choice=='4':
           bills()
      elif choice=='5':
-          print("exiting...")
-          quit("""thanks for using medicine management system""")
+          print(Fore.RED+"\033[1mexiting...\033[0m")
+          quit("""\033[1mThanks for using medicine management system\033[0m""")
      else:
-          print("Invalid choice")
+          print(Fore.RED+"\033[1mInvalid choice\033[0m")
           main()
 main()

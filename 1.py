@@ -177,7 +177,8 @@ def medicine():
           print(Fore.RED+"2.DELETE MEDICINE ")
           print(Fore.RED+"3.UPDATE MEDICINE ")
           print(Fore.RED+"4.VIEW ALL MEDICINE ")
-          print(Fore.RED+"5.EXIT")
+          print(Fore.RED+"5.ADD TO QUANTITY TO EXISTING QUANTITY")
+          print(Fore.RED+"6.EXIT")
           chr=input(Fore.GREEN+"Enter your choice: ")
           if chr=='1':
                id=int(input(Fore.YELLOW+"enter medicine id: "))
@@ -215,6 +216,23 @@ def medicine():
                time.sleep(5)
                medicine()
           if chr=='5':
+               print(Fore.YELLOW+"enter 1 for adding to the column")
+               print(Fore.YELLOW+"enter 2 for deleting to the column")
+               choice=input()
+               if choice=='1':
+                    id=int(input(Fore.YELLOW+"enter the medicine index"))
+                    sql="UPDATE MEDICINES SET QUANTITY=QUANTITY+%s WHERE id=%s"
+                    update= int(input(Fore.BLUE+"enter the amount you want to add to quantity: "))
+                    cursor.execute(sql, (update,id))
+               elif choice=='2':
+                    id=int(input(Fore.YELLOW+"enter the medicine index"))
+                    sql="UPDATE MEDICINES SET QUANTITY=QUANTITY-%s WHERE id=%s"
+                    update= int(input(Fore.BLUE+"enter the amount you want to delete from quantity: "))
+                    cursor.execute(sql, (update,id))
+               else:
+                    print(Fore.RED+"\033[1mInvalid choice\033[0m")
+                    medicine()
+          if chr=='6':
                print(Fore.YELLOW+"\033[1mExiting the program\033[0m")
                main()
           else : 

@@ -25,8 +25,8 @@ def suppliers():
      print("3.UPDATE SUPPLIERS")
      print("4.VIEW SUPPLIERS")
      print("5.EXIT")
-     chr=int(input("Enter your choice: "))
-     if chr==1:
+     chr=input("Enter your choice: ")
+     if chr=='1':
           id= int(input("enter supplier id: "))
           name=input("enter supplier name: ")
           address=input("enter supplier address: ")
@@ -37,14 +37,14 @@ def suppliers():
           print('supplier details add succesfully')
           time.sleep(3)
           suppliers()
-     if chr==2:
+     if chr=='2':
           id = int(input('enter supplier id you want to delete: '))
           sql = cursor.execute("delete from SUPPLIERS where ID=%s",(id,))
           myconn.commit()
           print('supplier deleted succesfully')
           time.sleep(3)
           suppliers()
-     if chr==3:
+     if chr=='3':
           id = int(input("enter supplier id you want to update: "))
           name = input ("enter the updated supplier name: ")
           address = input("enter the updated supplier address: ")
@@ -54,14 +54,14 @@ def suppliers():
           print('supplier details updated succesfully')
           time.sleep(3)
           suppliers()
-     if chr==4:
+     if chr=='4':
           sql=cursor.execute("SELECT * FROM SUPPLIERS")
           columns=[col[0] for col in cursor.description]
           rows=cursor.fetchall()
           print(tabulate(rows,headers=columns,tablefmt="grid"))
           time.sleep(5)
           suppliers()
-     if chr==5:
+     if chr=='5':
           print('GOING BACK TO MAIN MENU')
           main()
      else:
@@ -75,8 +75,8 @@ def bills():
      print("3.UPDATE BILLS")
      print("4.VIEW BILLS")
      print("5. EXIT")
-     chr = int(input("Enter your choice: "))
-     if chr==1:
+     chr = input("Enter your choice: ")
+     if chr=='1':
           id = int(input("enter bill id: "))
           name=input("enter customer name: ")
           amount=int(input("enter bill amount: "))
@@ -86,14 +86,14 @@ def bills():
           print('bill details add succesfully')
           time.sleep(3)
           bills()
-     if chr==2:
+     if chr=='2':
           id = int(input('enter bill id you want to delete: '))
           sql = cursor.execute("delete from BILLS where UID=%s",(id,))
           myconn.commit()
           print('bill deleted succesfully')
           time.sleep(3)
           bills()
-     if chr==3:
+     if chr=='3':
           id = int(input("enter bill id you want to update: "))
           name = input ("enter the updated customer name: ")
           amount = int(input("enter the updated bill amount: "))
@@ -102,14 +102,14 @@ def bills():
           print('bill details updated succesfully')
           time.sleep(3)
           bills()
-     if chr==4:
+     if chr=='4':
           sql=cursor.execute("SELECT * FROM BILLS")
           columns=[col[0] for col in cursor.description]
           rows=cursor.fetchall()
           print(tabulate(rows,headers=columns,tablefmt="grid"))
           time.sleep(5)
           bills()
-     if chr==5:
+     if chr=='5':
           print('GOING BACK TO MAIN MENU')
           main()
      else:
@@ -124,8 +124,8 @@ def employee():
           print("3. UPDATE EMPLOYEE ")
           print("4. VIEW ALL EMPLOYEE ")
           print("5. EXIT")
-          chr=int(input("Enter your choice: "))
-          if chr==1:
+          chr=input("Enter your choice: ")
+          if chr=='1':
                id=int(input("enter employee id: "))
                name=input("enter employee name: ")
                salary=int(input("enter employee salary: "))
@@ -136,14 +136,14 @@ def employee():
                print('employee details add succesfully')
                time.sleep(3)
                employee()
-          if chr==2:
+          if chr=='2':
                id = int(input('enter employee id you want to delete: '))
                sql = cursor.execute("delete from EMPLOYEE where EMPLOYEE_ID=%s",(id,))
                myconn.commit()
                print('employee deleted succesfully')
                time.sleep(3)
                employee()
-          if chr==3:
+          if chr=='3':
                id = int(input("enter employee id you want to update: "))
                name = input ("enter the updated employee name: ")
                salary = int(input("enter the updated employee salary: "))
@@ -153,14 +153,14 @@ def employee():
                print('employee details updated succesfully')
                time.sleep(3)
                employee()
-          if chr==4:
+          if chr=='4':
                sql=cursor.execute("SELECT * FROM EMPLOYEE")
                columns =[col[0] for col in cursor.description]
                rows=cursor.fetchall()
                print(tabulate(rows,headers=columns,tablefmt="grid"))
                time.sleep(5)
                employee()
-          if chr==5:
+          if chr=='5':
                print("exiting...")
                main()
           else:
@@ -175,8 +175,8 @@ def medicine():
           print("3.UPDATE MEDICINE ")
           print("4.VIEW ALL MEDICINE ")
           print("5.EXIT")
-          chr=int(input("Enter your choice: "))
-          if chr==1:
+          chr=input("Enter your choice: ")
+          if chr=='1':
                id=int(input("enter medicine id: "))
                name=input("enter medicine name: ")
                price=float(input("enter medicine price: "))
@@ -187,14 +187,14 @@ def medicine():
                print('medicine details add succesfully')
                time.sleep(3)
                medicine()
-          if chr==2:
+          if chr=='2':
                id = int(input('enter medicine id you want to delete: '))
                sql = cursor.execute("delete from medicines where id=%s",(id,))
                myconn.commit()
                print('medicine deleted succesfully')
                time.sleep(3)
                medicine()
-          if chr==3:
+          if chr=='3':
                id = int(input("enter medicine id you wnat to update: "))
                name =input ("enter the updated medicine name: ")
                price =float(input("enter the updated medicine price: "))
@@ -204,7 +204,7 @@ def medicine():
                print('medicine details updated succesfully')
                time.sleep(3)
                medicine()
-          if chr==4:
+          if chr=='4':
                sql=cursor.execute("SELECT * FROM MEDICINES")
                columns=[col[0] for col in cursor.description]
                rows=cursor.fetchall()
@@ -225,16 +225,16 @@ def main():
      print("3. SUPPLIERS ")
      print("4. BILLS ")
      print("5. EXIT")
-     choice=int(input("Enter your choice: "))
-     if choice==1:
+     choice=input("Enter your choice: ")
+     if choice=='1':
           employee()
-     elif choice==2:
+     elif choice=='2':
           medicine()
-     elif choice==3:
+     elif choice=='3':
           suppliers()
-     elif choice==4:
+     elif choice=='4':
           bills()
-     elif choice==5:
+     elif choice=='5':
           print("exiting...")
           quit("""thanks for using medicine management system""")
      else:

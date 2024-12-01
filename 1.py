@@ -220,15 +220,21 @@ def medicine():
                print(Fore.YELLOW+"enter 2 for deleting to the column")
                choice=input()
                if choice=='1':
-                    id=int(input(Fore.YELLOW+"enter the medicine index"))
+                    id=int(input(Fore.YELLOW+"enter the medicine index: "))
                     sql="UPDATE MEDICINES SET QUANTITY=QUANTITY+%s WHERE id=%s"
                     update= int(input(Fore.BLUE+"enter the amount you want to add to quantity: "))
                     cursor.execute(sql, (update,id))
+                    print(Fore.BLUE+"data added succesfully!!")
+                    time.sleep(3)
+                    medicine()
                elif choice=='2':
-                    id=int(input(Fore.YELLOW+"enter the medicine index"))
+                    id=int(input(Fore.YELLOW+"enter the medicine index: "))
                     sql="UPDATE MEDICINES SET QUANTITY=QUANTITY-%s WHERE id=%s"
                     update= int(input(Fore.BLUE+"enter the amount you want to delete from quantity: "))
                     cursor.execute(sql, (update,id))
+                    print(Fore.BLUE+"data deleted succesfully!!")
+                    time.sleep(3)
+                    medicine()
                else:
                     print(Fore.RED+"\033[1mInvalid choice\033[0m")
                     medicine()

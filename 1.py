@@ -263,7 +263,9 @@ def main():
           bills()
      elif choice=='5':
           print(Fore.RED+"\033[1mexiting...\033[0m")
-          quit("""\033[1mThanks for using medicine management system\033[0m""")
+          print("""\033[1mThanks for using medicine management system\033[0m""")
+          time.sleep(2)
+          exit()
      else:
           print(Fore.RED+"\033[1mInvalid choice\033[0m")
           main()

@@ -8,11 +8,7 @@ myconn = sqltor.connect(user='root', password='arindam ak', host='127.0.0.1')
 cursor= myconn.cursor()
 cursor.execute('CREATE DATABASE  IF NOT EXISTS mydatabase')
 cursor.execute('USE mydatabase')
-cursor.execute("""CREATE TABLE IF NOT EXISTS EMPLOYEE (
-               EMPLOYEE_ID INT PRIMARY KEY, 
-               NAME VARCHAR(255),
-               SALARY INT,
-               DEPARTMENT VARCHAR(255))""")
+cursor.execute("""CREATE TABLE IF NOT EXISTS EMPLOYEE (EMPLOYEE_ID INT PRIMARY KEY, NAME VARCHAR(255),SALARY INT,DEPARTMENT VARCHAR(255))""")
 myconn.commit()
 cursor.execute('CREATE TABLE IF NOT EXISTS MEDICINES(ID INT PRIMARY KEY, NAME VARCHAR (100),PRICE INT,QUANTITY INT)')
 myconn.commit()

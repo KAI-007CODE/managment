@@ -22,6 +22,152 @@ def searchbook(bookname):
      else:
           print("BOOKS NOT FOUND !!!")
 
+def addbook():
+     print()
+     print("ENTER THE NAME OF THE BOOK")
+     name=input(">>>")
+     print("ENTER AUTOR NAME")
+     AUTHOR_name=input(">>>")
+     print("ENTER THE ISBN")
+     ISBN=input(">>>")
+     print("ENTER THE GENRE OF THE BOOK")
+     GEN=input(">>>")
+     print("PUBLISHER")
+     PUB=input(">>>")
+     print("AVAILIBILITY STATUS")
+     AVA=input(">>>")
+
+     SQL = "INSERT INTO BOOKS (TITTLE,AUTHOR,ISBN,GENRE,PUBLISHER,AVAILIBILY) VALUES('{}','{}','{}','{}','{}','{}')".format(name,AUTHOR_name,ISBN,GEN,PUB,AVA)
+     cursor.execute(SQL)
+     myconn.commit()
+     time.sleep(2)
+     print("BOOKS ADDED TO LIBRARY INVENTORY !!!")
+
+
+def deletebook():
+     print()
+     print("ENTER THE ISBN NUMBER OF THE BOOK")
+     N=input(">>>")
+     query = "SELECT ALL FROM BOOKS WHERE ISBN LIKE %s"
+     cursor.execute(query,(N,))
+     result = cursor.fetchall()
+     if result:
+          sql = "DELETE FROM BOOKS WHERE ISBN LIKE %s"
+          cursor.execute(sql,(N,))
+          myconn.commit()
+          time.sleep(1)
+          print("BOOK HAS BEEN DELETED !!!")
+     else:
+          print("BOOK NOT FOUND !!!")
+
+
+def updatebook():
+     print()
+     print("WHAT DO YOU WANT TO UPDATE ?")
+     print("""1. TITTLE.
+     2. AUTHOUR.
+     3. ISBN.
+     4. PUBLISHER.
+     5. GENRE.
+     6. ALL DETAILS EXCEPT ISBN NUMBER.
+     """)
+     N=int(input(">>>"))
+     if N == 1:
+          print()
+          print("ENTER THE ISBN NUMBER OF THE BOOK")
+          O=input(">>>")
+          print("ENTER THE NEW NAME OF THE BOOK")
+          K=input(">>>")
+          cursor.execute(" UPDATE BOOKS SET TITTLE =%s WHERE ISBN =%s"),(K,O)
+          myconn.commit()
+          print("DETAILS CHANGED SUCCESFULLY !!!")
+          time.sleep(2)
+          bookrelated()
+     if N == 2:
+          print()
+          print("ENTER THE ISBN NUMBER OF THE BOOK")
+          O=input(">>>")
+          print("ENTER THE NEW AUTHOR NAME OF THE BOOK")
+          K=input(">>>")
+          cursor.execute(" UPDATE BOOKS SET AUTHOR =%s WHERE ISBN =%s"),(K,O)
+          myconn.commit()
+          print("DETAILS CHANGED SUCCESFULLY !!!")
+          time.sleep(2)
+          bookrelated()
+     if N == 3:
+          print()
+          print("ENTER THE NAME OF THE BOOK")
+          O=input(">>>")
+          print("ENTER THE NEW ISBN NUMBER OF THE BOOK")
+          K=input(">>>")
+          cursor.execute(" UPDATE BOOKS SET ISBN =%s WHERE TITTLE =%s"),(K,O)
+          myconn.commit()
+          print("DETAILS CHANGED SUCCESFULLY !!!")
+          time.sleep(2)
+          bookrelated()
+     if N == 4:
+          print()
+          print("ENTER THE NAME OF THE BOOK")
+          O=input(">>>")
+          print("ENTER THE NEW PUBLISHER OF THE BOOK")
+          K=input(">>>")
+          cursor.execute(" UPDATE BOOKS SET PUBLISHER =%s WHERE TITTLE =%s"),(K,O)
+          myconn.commit()
+          print("DETAILS CHANGED SUCCESFULLY !!!")
+          time.sleep(2)
+          bookrelated()
+     if N == 5:
+          print()
+          print("ENTER THE NAME OF THE BOOK")
+          O=input(">>>")
+          print("ENTER THE NEW GENRE OF THE BOOK")
+          K=input(">>>")
+          cursor.execute(" UPDATE BOOKS SET GENRE =%s WHERE TITTLE =%s"),(K,O)
+          myconn.commit()
+          print("DETAILS CHANGED SUCCESFULLY !!!")
+          time.sleep(2)
+          bookrelated()
+     if N == 6:
+          print()
+          print("ENTER THE ISBN NUMBER OF THE BOOK")
+          O=input(">>>")
+          print("ENTER THE NEW NAME OF THE BOOK")
+          K=input(">>>")
+          print("ENTER THE NEW AUTHOR OF THE BOOK")
+          P=input(">>>")
+          print("ENTER THE NEW PUBLISHER OF THE BOOK")
+          Q=input(">>>")
+          print("ENTER THE NEW GENRE OF THE BOOK")
+          R=input(">>>")
+          cursor.execute(" UPDATE BOOKS SET TITTLE =%s, AUTHOR=%s, PUBLISHER=%s, GENRE=%s WHERE ISBN =%s"),(K,P,Q,R,O)
+          myconn.commit()
+          print("DETAILS CHANGED SUCCESFULLY !!!")
+          time.sleep(2)
+          bookrelated()
+     else:
+          print("INVALID / UNKNOWN CHOICE")
+          time.sleep(1.5)
+          updatebook()
+
+
+def changeavailable(BOOK_NAME):
+     y="YES"
+     n="NO"
+     QUERY = f"SELECT AVAILIBILITY FROM BOOKS WHERE NAME='{BOOK_NAME}'"
+     if QUERY=="YES":
+          sql=f"UPDATE BOOKS SET AVAILIBILITY ='{n}' WHERE BOOK_NAME='{BOOK_NAME}' "
+          cursor.execute(sql)
+          myconn.commit()
+          print()
+          print("CHANGED !!!")
+     else:
+          sql=f"UPDATE BOOKS SET AVAILIBILITY ='{y}' WHERE BOOK_NAME='{BOOK_NAME}' "
+          cursor.execute(sql)
+          myconn.commit()
+          print()
+          print("CHANGED !!!")
+
+
 def searchuser(username):
      query="SELECT * FROM ACCOUNT WHERE USERNAME LIKE %s"
      cursor.execute(query, ('%' +username+ '%',))
@@ -31,6 +177,7 @@ def searchuser(username):
           print(tabulate(result,headers=columns,tablefmt="grid"))
      else:
           print("ACCOUNT NOT FOUND !!!")
+
 
 def deleteuser(username):
      query="SELECT * FROM ACCOUNT WHERE USERNAME LIKE %s"
@@ -43,6 +190,7 @@ def deleteuser(username):
           print("USER DELETED SUCCESSFUL !!!")
      else:
           print("ACCOUNT NOT FOUND !!!")
+
 
 def updateuser(id):
      username=input("ENTER THE NEW USERNAME: ")
@@ -70,8 +218,6 @@ def userchoice():
           bookname=input(">>>")
           searchbook(bookname)
           
-
-
 
 def userrelated():
      print()
@@ -103,6 +249,28 @@ def userrelated():
           print("INVAID CHOICE !!!")
 
 
+def bookrelated():
+     print()
+     print("1. ADD NEW BOOK TO THE STOCK.")
+     print("2. DELETE BOOK FROM THE STOCK.")
+     print("3. UPDATE BOOK DETAILS.")
+     print("4. CHANGE AVALIBILITY OF THE BOOK.")
+     print("5. GO BACK TO PREVIOUS PAGE.")
+     n=int(input(">>>"))
+
+     if n==1:
+          addbook()
+     if n==2:
+          deletebook()
+     if n==3:
+          updatebook()
+     if n==4:
+          changeavailable()
+     if n==5:
+          adminchoice()
+     else:
+          print()
+          print("INVALID / UNKNOWN CHOICE !!!")
 
 
 def adminchoice():
@@ -123,9 +291,6 @@ def adminchoice():
           userrelated()
      if n==4:
           exit("THANKS FOR USING THE PROGRAM.")
-
-
-
 
 
 def user():
@@ -152,5 +317,6 @@ def user():
                user()
      else:
           print("INVALID CHOICE !!!")
+
 
 user()

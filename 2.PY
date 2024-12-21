@@ -16,7 +16,7 @@ myconn.commit()
 cursor.execute("""CREATE TABLE IF NOT EXISTS TOWNLIBRARY_BOOKS(
                BOOK_NAME VARCHAR(225) NOT NULL,
                BOOK_PRICE VARCHAR(5) NOT NULL,
-               BOOKS_BARCODE VARCHAR(20) NOT NULL
+               BOOKS_BARCODE VARCHAR(20) NOT NULL FOREIGN KEY
                )""")
 myconn.commit()
 
@@ -29,4 +29,12 @@ def newuser():
      sql="INSERT INTO TOWNLIBRARY(USER_ID,USER_NAME,DOC,SUBSCRIPTION) VALUES ('{}','{}','{}','{}')".format(id,name, doc, sub)
      cursor.execute(sql)
      myconn.commit()
-newuser()
+
+# funtion to books present in the library
+def books():
+     b_name=input("ENTER THE NAME OF THE BOOK: ")
+     b_price=input("ENTER THE PRICE OF THE BOOK: ")
+     b_barcode=input("ENTER THE BARCODE DETAILS OF THE BOOKS: ")
+     sql="INPUT INTO TOWNLIBRARY_BOOKS(BOOK_NAME,BOOK_PRICE,BOOK_BARCODE) VALUES ('{}','{}','{}')".format(b_name,b_price,b_barcode)
+     cursor.execute(sql)
+     myconn.commit()

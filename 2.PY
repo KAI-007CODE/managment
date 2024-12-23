@@ -25,29 +25,30 @@ def searchbook(bookname):
 def addbook():
      print()
      print("ENTER THE NAME OF THE BOOK")
-     name=input(">>>")
+     name=input(">>>").upper()
      print("ENTER AUTOR NAME")
-     AUTHOR_name=input(">>>")
+     AUTHOR_name=input(">>>").upper()
      print("ENTER THE ISBN")
-     ISBN=input(">>>")
+     ISBN=input(">>>").upper()
      print("ENTER THE GENRE OF THE BOOK")
-     GEN=input(">>>")
+     GEN=input(">>>").upper()
      print("PUBLISHER")
-     PUB=input(">>>")
+     PUB=input(">>>").upper()
      print("AVAILIBILITY STATUS")
-     AVA=input(">>>")
+     AVA=input(">>>").upper()
 
      SQL = "INSERT INTO BOOKS (TITTLE,AUTHOR,ISBN,GENRE,PUBLISHER,AVAILIBILY) VALUES('{}','{}','{}','{}','{}','{}')".format(name,AUTHOR_name,ISBN,GEN,PUB,AVA)
      cursor.execute(SQL)
      myconn.commit()
      time.sleep(2)
      print("BOOKS ADDED TO LIBRARY INVENTORY !!!")
+     bookrelated()
 
 
 def deletebook():
      print()
      print("ENTER THE ISBN NUMBER OF THE BOOK")
-     N=input(">>>")
+     N=input(">>>").upper()
      query = "SELECT ALL FROM BOOKS WHERE ISBN LIKE %s"
      cursor.execute(query,(N,))
      result = cursor.fetchall()
@@ -59,6 +60,7 @@ def deletebook():
           print("BOOK HAS BEEN DELETED !!!")
      else:
           print("BOOK NOT FOUND !!!")
+     bookrelated()
 
 
 def updatebook():
@@ -75,9 +77,9 @@ def updatebook():
      if N == 1:
           print()
           print("ENTER THE ISBN NUMBER OF THE BOOK")
-          O=input(">>>")
+          O=input(">>>").upper()
           print("ENTER THE NEW NAME OF THE BOOK")
-          K=input(">>>")
+          K=input(">>>").upper()
           cursor.execute(" UPDATE BOOKS SET TITTLE =%s WHERE ISBN =%s"),(K,O)
           myconn.commit()
           print("DETAILS CHANGED SUCCESFULLY !!!")
@@ -86,9 +88,9 @@ def updatebook():
      if N == 2:
           print()
           print("ENTER THE ISBN NUMBER OF THE BOOK")
-          O=input(">>>")
+          O=input(">>>").upper()
           print("ENTER THE NEW AUTHOR NAME OF THE BOOK")
-          K=input(">>>")
+          K=input(">>>").upper()
           cursor.execute(" UPDATE BOOKS SET AUTHOR =%s WHERE ISBN =%s"),(K,O)
           myconn.commit()
           print("DETAILS CHANGED SUCCESFULLY !!!")
@@ -97,9 +99,9 @@ def updatebook():
      if N == 3:
           print()
           print("ENTER THE NAME OF THE BOOK")
-          O=input(">>>")
+          O=input(">>>").upper()
           print("ENTER THE NEW ISBN NUMBER OF THE BOOK")
-          K=input(">>>")
+          K=input(">>>").upper()
           cursor.execute(" UPDATE BOOKS SET ISBN =%s WHERE TITTLE =%s"),(K,O)
           myconn.commit()
           print("DETAILS CHANGED SUCCESFULLY !!!")
@@ -108,9 +110,9 @@ def updatebook():
      if N == 4:
           print()
           print("ENTER THE NAME OF THE BOOK")
-          O=input(">>>")
+          O=input(">>>").upper()
           print("ENTER THE NEW PUBLISHER OF THE BOOK")
-          K=input(">>>")
+          K=input(">>>").upper()
           cursor.execute(" UPDATE BOOKS SET PUBLISHER =%s WHERE TITTLE =%s"),(K,O)
           myconn.commit()
           print("DETAILS CHANGED SUCCESFULLY !!!")
@@ -119,9 +121,9 @@ def updatebook():
      if N == 5:
           print()
           print("ENTER THE NAME OF THE BOOK")
-          O=input(">>>")
+          O=input(">>>").upper()
           print("ENTER THE NEW GENRE OF THE BOOK")
-          K=input(">>>")
+          K=input(">>>").upper()
           cursor.execute(" UPDATE BOOKS SET GENRE =%s WHERE TITTLE =%s"),(K,O)
           myconn.commit()
           print("DETAILS CHANGED SUCCESFULLY !!!")
@@ -130,15 +132,15 @@ def updatebook():
      if N == 6:
           print()
           print("ENTER THE ISBN NUMBER OF THE BOOK")
-          O=input(">>>")
+          O=input(">>>").upper()
           print("ENTER THE NEW NAME OF THE BOOK")
-          K=input(">>>")
+          K=input(">>>").upper()
           print("ENTER THE NEW AUTHOR OF THE BOOK")
-          P=input(">>>")
+          P=input(">>>").upper()
           print("ENTER THE NEW PUBLISHER OF THE BOOK")
-          Q=input(">>>")
+          Q=input(">>>").upper()
           print("ENTER THE NEW GENRE OF THE BOOK")
-          R=input(">>>")
+          R=input(">>>").upper()
           cursor.execute(" UPDATE BOOKS SET TITTLE =%s, AUTHOR=%s, PUBLISHER=%s, GENRE=%s WHERE ISBN =%s"),(K,P,Q,R,O)
           myconn.commit()
           print("DETAILS CHANGED SUCCESFULLY !!!")
@@ -153,19 +155,20 @@ def updatebook():
 def changeavailable(BOOK_NAME):
      y="YES"
      n="NO"
-     QUERY = f"SELECT AVAILIBILITY FROM BOOKS WHERE NAME='{BOOK_NAME}'"
+     QUERY = f"SELECT AVAILIBILY FROM BOOKS WHERE NAME='{BOOK_NAME}'"
      if QUERY=="YES":
-          sql=f"UPDATE BOOKS SET AVAILIBILITY ='{n}' WHERE BOOK_NAME='{BOOK_NAME}' "
+          sql=f"UPDATE BOOKS SET AVAILIBILY ='{n}' WHERE TITTLE='{BOOK_NAME}' "
           cursor.execute(sql)
           myconn.commit()
           print()
           print("CHANGED !!!")
      else:
-          sql=f"UPDATE BOOKS SET AVAILIBILITY ='{y}' WHERE BOOK_NAME='{BOOK_NAME}' "
+          sql=f"UPDATE BOOKS SET AVAILIBILY ='{y}' WHERE TITTLE='{BOOK_NAME}' "
           cursor.execute(sql)
           myconn.commit()
           print()
           print("CHANGED !!!")
+     bookrelated()
 
 
 def searchuser(username):
@@ -193,8 +196,8 @@ def deleteuser(username):
 
 
 def updateuser(id):
-     username=input("ENTER THE NEW USERNAME: ")
-     passkey=input("ENTER THE NEW PASSKEY: ")
+     username=input("ENTER THE NEW USERNAME: ").upper()
+     passkey=input("ENTER THE NEW PASSKEY: ").upper()
      cursor.execute("UPDATE ACCOUNT SET USERNAME =%s, PASSKEY =%s WHERE ID =%s",(username,passkey,id))
      myconn.commit()
      print("DETAILS UPDATED SUCCESFULLY")
@@ -207,14 +210,14 @@ def userchoice():
      print("3. RETURN A BOOK.")
      n=int(input(">>>"))
      if n==1:
-          ID = input("ENTER ID : ")
-          username= input('ENTER YOUR NAME: ')
-          passkey= input('ENTER PASSWORD: ')
+          ID = input("ENTER ID : ").upper()
+          username= input('ENTER YOUR NAME: ').upper()
+          passkey= input('ENTER PASSWORD: ').upper()
           createaccount(ID, username,passkey)
           time.sleep(1)
           userchoice()
      if n==2:
-          print("ENTER THE NAME OF THE BOOK")
+          print("ENTER THE NAME OF THE BOOK").upper()
           bookname=input(">>>")
           searchbook(bookname)
           
@@ -229,19 +232,19 @@ def userrelated():
      print()
      if N==1:
           print("ENTER THE USER NAME OF THE PERSON.")
-          username= input(">>>")
+          username= input(">>>").upper()
           searchuser(username)
           time.sleep(1)
           userrelated()
      if N==2:
           print("ENTER THE USER NAME OF THE PERSON.")
-          username= input(">>>")
+          username= input(">>>").upper()
           deleteuser(username)
           time.sleep(1)
           userrelated()
      if N==3:
           print("ENTER THE ID OF THE PERSON")
-          n=int(input(">>>"))
+          n=(input(">>>")).upper()
           updateuser(n)
      if N ==4:
           adminchoice()
@@ -265,7 +268,8 @@ def bookrelated():
      if n==3:
           updatebook()
      if n==4:
-          changeavailable()
+          n=input("ENTER THE BOOKS NAME: ").upper()
+          changeavailable(n)
      if n==5:
           adminchoice()
      else:
@@ -281,14 +285,16 @@ def adminchoice():
      print("4. EXIT THE PROGRAM.")
      n= int(input(">>>"))
      if n==1:
-          ID = input("ENTER ID : ")
-          username= input('ENTER YOUR NAME: ')
-          passkey= input('ENTER PASSWORD: ')
+          ID = input("ENTER ID : ").upper()
+          username= input('ENTER YOUR NAME: ').upper()
+          passkey= input('ENTER PASSWORD: ').upper()
           createaccount(ID, username,passkey)
           time.sleep(1)
           adminchoice()
      if n==2:
           userrelated()
+     if n== 3:
+          bookrelated()
      if n==4:
           exit("THANKS FOR USING THE PROGRAM.")
 
@@ -297,7 +303,7 @@ def user():
      print("WELCOME TO THE TOWN NEW LIBRARY")
      print()
      print("WHO ARE YOU ? (USER / ADMIN)")
-     ob=input(">>>")
+     ob=input(">>>").upper()
      if ob == "USER" or ob =="user" :
           print("WAHT DO YOU WANT TO DO ?")
           time.sleep(1)
@@ -305,7 +311,7 @@ def user():
 
      elif ob == "ADMIN" or ob =="admin":
           print("ENTER USERNAME")
-          um=input(">>>")
+          um=input(">>>").upper()
           print("ENTER YOUR PASSKEY")
           PASS= input(">>>")
           if um == "USER" and PASS=="password123" :

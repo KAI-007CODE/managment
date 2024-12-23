@@ -155,15 +155,19 @@ def updatebook():
 def changeavailable(BOOK_NAME):
      y="YES"
      n="NO"
-     QUERY = f"SELECT AVAILIBILY FROM BOOKS WHERE NAME='{BOOK_NAME}'"
-     if QUERY=="YES":
-          sql=f"UPDATE BOOKS SET AVAILIBILY ='{n}' WHERE TITTLE='{BOOK_NAME}' "
-          cursor.execute(sql)
+     QUERY = f"SELECT AVAILIBILY FROM BOOKS WHERE TITTLE='{BOOK_NAME}'"
+     cursor.execute(QUERY)
+     result=cursor.fetchall()
+     if result[0] == "YES":
+          print(result)
+          cursor.execute(f"UPDATE BOOKS SET AVAILIBILY ='NO' WHERE TITTLE='{BOOK_NAME}' ")
+          # cursor.execute(sql)
           myconn.commit()
           print()
           print("CHANGED !!!")
      else:
-          sql=f"UPDATE BOOKS SET AVAILIBILY ='{y}' WHERE TITTLE='{BOOK_NAME}' "
+          print(result)
+          sql=f"UPDATE BOOKS SET AVAILIBILY ='YES' WHERE TITTLE='{BOOK_NAME}' "
           cursor.execute(sql)
           myconn.commit()
           print()
@@ -217,8 +221,8 @@ def userchoice():
           time.sleep(1)
           userchoice()
      if n==2:
-          print("ENTER THE NAME OF THE BOOK").upper()
-          bookname=input(">>>")
+          print("ENTER THE NAME OF THE BOOK")
+          bookname=input(">>>").upper()
           searchbook(bookname)
           
 
@@ -250,6 +254,40 @@ def userrelated():
           adminchoice()
      else:
           print("INVAID CHOICE !!!")
+def viewbook():
+     print()
+     print("1. DO YOU WANT TO SEE ALL THE BOOKS PRESENT IN THE LIBRARY ? ")
+     print("2. DO YOU WNAT TO VIEW ALL THE AVAILABLE BOOKS IN THE MOMENT ?")
+     print("3. DO YOU WANT TO VIEW BOOKS FROM SPECIFIC GENRE ?")
+     n= input(">>>").upper()
+     if n == "1":
+          cursor.execute("SELECT * FROM BOOKS ")
+          columns=[col[0] for col in cursor.description]
+          rows=cursor.fetchall()
+          print(tabulate(rows,headers=columns,tablefmt="grid"))
+          time.sleep(2)  
+          bookrelated()
+     if n == "2":
+          cursor.execute("SELECT * FROM FROM BOOKS WHERE AVAILIBILY = 'YES'")
+          columns=[col[0] for col in cursor.description]
+          rows=cursor.fetchall()
+          print(tabulate(rows,headers=columns,tablefmt="grid"))
+          time.sleep(2)
+          bookrelated()
+     if n=="3":
+          print()
+          print("ENTER THE GENRE OF BOOKS YOU WNAT TO SEARCH")
+          gen=input(">>>").upper()
+          sql=f"SELECT * FROM BOOKS WHERE GENRE = '{gen}'"
+          cursor.execute(sql)
+          columns=[col[0] for col in cursor.description]
+          rows=cursor.fetchall()
+          print(tabulate(rows,headers=columns,tablefmt="grid"))
+          time.sleep(2)
+          bookrelated()
+     else:
+          print()
+          print("INVALID/UNKOWN CHOICE !!!")
 
 
 def bookrelated():
@@ -257,8 +295,9 @@ def bookrelated():
      print("1. ADD NEW BOOK TO THE STOCK.")
      print("2. DELETE BOOK FROM THE STOCK.")
      print("3. UPDATE BOOK DETAILS.")
-     print("4. CHANGE AVALIBILITY OF THE BOOK.")
-     print("5. GO BACK TO PREVIOUS PAGE.")
+     print("4. SHOW ALL THE BOOK")
+     print("5. CHANGE AVALIBILITY OF THE BOOK.")
+     print("6. GO BACK TO PREVIOUS PAGE.")
      n=int(input(">>>"))
 
      if n==1:
@@ -268,9 +307,11 @@ def bookrelated():
      if n==3:
           updatebook()
      if n==4:
+          viewbook()
+     if n==5:
           n=input("ENTER THE BOOKS NAME: ").upper()
           changeavailable(n)
-     if n==5:
+     if n==6:
           adminchoice()
      else:
           print()
@@ -283,6 +324,7 @@ def adminchoice():
      print("2. USER RELATED TASK.")
      print("3. BOOKS RELATED TASK.")
      print("4. EXIT THE PROGRAM.")
+     print("5. GO BACK TO HOME PAGGE.")
      n= int(input(">>>"))
      if n==1:
           ID = input("ENTER ID : ").upper()
@@ -297,6 +339,9 @@ def adminchoice():
           bookrelated()
      if n==4:
           exit("THANKS FOR USING THE PROGRAM.")
+     if n == 5:
+          print()
+          user()
 
 
 def user():

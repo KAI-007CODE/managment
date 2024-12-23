@@ -153,22 +153,17 @@ def updatebook():
 
 
 def changeavailable(BOOK_NAME):
-     y="YES"
-     n="NO"
-     QUERY = f"SELECT AVAILIBILY FROM BOOKS WHERE TITTLE='{BOOK_NAME}'"
-     cursor.execute(QUERY)
-     result=cursor.fetchall()
-     if result[0] == "YES":
-          print(result)
-          cursor.execute(f"UPDATE BOOKS SET AVAILIBILY ='NO' WHERE TITTLE='{BOOK_NAME}' ")
-          # cursor.execute(sql)
+     QUERY = "SELECT AVAILIBILY FROM BOOKS WHERE TITTLE = %s"
+     cursor.execute(QUERY, (BOOK_NAME,))
+
+     result=cursor.fetchone()
+     if result and result[0] == "YES":
+          cursor.execute("UPDATE BOOKS SET AVAILIBILY ='NO' WHERE TITTLE=%s", (BOOK_NAME,))
           myconn.commit()
           print()
           print("CHANGED !!!")
      else:
-          print(result)
-          sql=f"UPDATE BOOKS SET AVAILIBILY ='YES' WHERE TITTLE='{BOOK_NAME}' "
-          cursor.execute(sql)
+          cursor.execute("UPDATE BOOKS SET AVAILIBILY ='YES' WHERE TITTLE=%s",(BOOK_NAME,))
           myconn.commit()
           print()
           print("CHANGED !!!")
@@ -268,7 +263,7 @@ def viewbook():
           time.sleep(2)  
           bookrelated()
      if n == "2":
-          cursor.execute("SELECT * FROM FROM BOOKS WHERE AVAILIBILY = 'YES'")
+          cursor.execute("SELECT * FROM BOOKS WHERE AVAILIBILY = 'YES'")
           columns=[col[0] for col in cursor.description]
           rows=cursor.fetchall()
           print(tabulate(rows,headers=columns,tablefmt="grid"))

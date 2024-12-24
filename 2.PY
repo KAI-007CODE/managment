@@ -313,13 +313,35 @@ def bookrelated():
           print("INVALID / UNKNOWN CHOICE !!!")
 
 
+def issuebook():
+     name=input("WAHT BOOK DO YOU WANT TO BORROW: ").upper()
+     QUERY = "SELECT AVAILIBILY FROM BOOKS WHERE TITTLE = %s"
+     cursor.execute(QUERY, (name,))
+
+     result=cursor.fetchone()
+     if result and result[0] == "YES":
+          isbn=input("ENTER THE ISBN OF THE BOOK BORROWED: ").upper()
+          # NAME=input("ENTER THE NAME OF THE BOOK TO BE BORROWED: ").upper()
+          ISSUENAME=input("ENTER THE NAME OF THE PERSON THE BOOK IS BORRROWED TO: ").upper()
+          ISSUEDATE=input("ENTER THE DATE THE BOOK WAS ISSUED(DD/MM/YYYY): ").upper()
+          SQL="INSERT INTO ISSUEBOOK (ISBN,BOOKNAME,ISSUEDTO,DATE) VALUES ('{}','{}','{}','{}') ".format(isbn,name,ISSUENAME,ISSUEDATE)
+          cursor.execute(SQL)
+          cursor.execute("UPDATE BOOKS SET AVAILIBILY ='NO' WHERE TITTLE=%s", (name,))
+          myconn.commit()
+          print()
+          print("CHANGED !!!")
+     else: 
+          print()
+          print(f"THE BOOK {name} IS NOT AVAILABLE")
+
 def adminchoice():
      print()
      print("1. CREATE A ACCOOUNT.")
      print("2. USER RELATED TASK.")
      print("3. BOOKS RELATED TASK.")
-     print("4. EXIT THE PROGRAM.")
-     print("5. GO BACK TO HOME PAGGE.")
+     print("4. ISSUE A BOOK.")
+     print("5. EXIT THE PROGRAM.")
+     print("6. GO BACK TO HOME PAGGE.")
      n= int(input(">>>"))
      if n==1:
           ID = input("ENTER ID : ").upper()
@@ -332,9 +354,11 @@ def adminchoice():
           userrelated()
      if n== 3:
           bookrelated()
-     if n==4:
+     if n== 4:
+          issuebook()
+     if n==5:
           exit("THANKS FOR USING THE PROGRAM.")
-     if n == 5:
+     if n == 6:
           print()
           user()
 

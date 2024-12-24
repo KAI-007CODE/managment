@@ -229,6 +229,7 @@ def userchoice():
      print("1. CREATE A ACCOUNT.")
      print("2. SEARCH FOR A BOOK.")
      print("3. RETURN A BOOK.")
+     print("4. QUIT")
      n=int(input(">>>"))
      if n==1:
           ID = input("ENTER ID : ").upper()
@@ -243,6 +244,9 @@ def userchoice():
           searchbook(bookname)
      if n==3:
           returnbook()
+     if n==4:
+          time.sleep(3)
+          quit("THANKS FOR USING OUR SYSTEM !!!")
      else:
           print("INVALID/UNKNOWN CHOICE")
           
@@ -311,6 +315,24 @@ def viewbook():
           print("INVALID/UNKOWN CHOICE !!!")
 
 
+def viewissuedbook():
+     cursor.execute("SELECT * FROM ISSUEBOOK ")
+     columns=[col[0] for col in cursor.description]
+     rows=cursor.fetchall()
+     print(tabulate(rows,headers=columns,tablefmt="grid"))
+     time.sleep(2)  
+     adminchoice()
+
+
+def viewreturnedbook():
+     cursor.execute("SELECT * FROM RETURNBOOK ")
+     columns=[col[0] for col in cursor.description]
+     rows=cursor.fetchall()
+     print(tabulate(rows,headers=columns,tablefmt="grid"))
+     time.sleep(2)  
+     bookrelated()
+
+
 def bookrelated():
      print()
      print("1. ADD NEW BOOK TO THE STOCK.")
@@ -366,8 +388,10 @@ def adminchoice():
      print("2. USER RELATED TASK.")
      print("3. BOOKS RELATED TASK.")
      print("4. ISSUE A BOOK.")
-     print("5. EXIT THE PROGRAM.")
-     print("6. GO BACK TO HOME PAGGE.")
+     print("5. VIEW ALL THE ISUED BOOKS.")
+     print("6. VIEW ALL THE RETURNED BOOK.")
+     print("7. EXIT THE PROGRAM.")
+     print("8. GO BACK TO HOME PAGGE.")
      n= int(input(">>>"))
      if n==1:
           ID = input("ENTER ID : ").upper()
@@ -378,13 +402,17 @@ def adminchoice():
           adminchoice()
      if n==2:
           userrelated()
-     if n== 3:
+     if n==3:
           bookrelated()
-     if n== 4:
+     if n==4:
           issuebook()
      if n==5:
+          viewissuedbook()
+     if n==6:
+          viewreturnedbook()
+     if n==7:
           exit("THANKS FOR USING THE PROGRAM.")
-     if n == 6:
+     if n==8:
           print()
           user()
 

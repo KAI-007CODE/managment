@@ -170,6 +170,28 @@ def changeavailable(BOOK_NAME):
      bookrelated()
 
 
+def returnbook():
+     print()
+     name=input("WHAT BOOK DO YOU WANT TO RETURN: ").upper()
+     QUERY = "SELECT AVAILIBILY FROM BOOKS WHERE TITTLE = %s"
+     cursor.execute(QUERY, (name,))
+
+     result=cursor.fetchone()
+     if result and result[0] == "NO":
+          isbn=input("ENTER THE ISBN OF THE BOOK RETURNED: ").upper()
+          # NAME=input("ENTER THE NAME OF THE BOOK TO BE BORROWED: ").upper()
+          RETURNNAME=input("ENTER THE NAME OF THE PERSON WHO RETURNED THE BOOK: ").upper()
+          ISSUEDATE=input("ENTER THE DATE THE BOOK WAS RETURNED(DD/MM/YYYY): ").upper()
+          SQL="INSERT INTO RETURNBOOK (ISBN,BOOKNAME,RETURNEDBY,DATE) VALUES ('{}','{}','{}','{}') ".format(isbn,name,RETURNNAME,ISSUEDATE)
+          cursor.execute(SQL)
+          cursor.execute("UPDATE BOOKS SET AVAILIBILY ='YES' WHERE TITTLE=%s", (name,))
+          myconn.commit()
+          print("THE BOOK HAS BEEN RETURNED !!!")
+     else: 
+          print()
+          print(f"THE BOOK {name} IS NOT AVAILABLE")
+     userchoice()
+
 def searchuser(username):
      query="SELECT * FROM ACCOUNT WHERE USERNAME LIKE %s"
      cursor.execute(query, ('%' +username+ '%',))
@@ -219,6 +241,10 @@ def userchoice():
           print("ENTER THE NAME OF THE BOOK")
           bookname=input(">>>").upper()
           searchbook(bookname)
+     if n==3:
+          returnbook()
+     else:
+          print("INVALID/UNKNOWN CHOICE")
           
 
 def userrelated():
@@ -314,7 +340,8 @@ def bookrelated():
 
 
 def issuebook():
-     name=input("WAHT BOOK DO YOU WANT TO BORROW: ").upper()
+     print()
+     name=input("WHAT BOOK DO YOU WANT TO BORROW: ").upper()
      QUERY = "SELECT AVAILIBILY FROM BOOKS WHERE TITTLE = %s"
      cursor.execute(QUERY, (name,))
 
@@ -328,11 +355,10 @@ def issuebook():
           cursor.execute(SQL)
           cursor.execute("UPDATE BOOKS SET AVAILIBILY ='NO' WHERE TITTLE=%s", (name,))
           myconn.commit()
-          print()
-          print("CHANGED !!!")
      else: 
           print()
           print(f"THE BOOK {name} IS NOT AVAILABLE")
+     adminchoice()
 
 def adminchoice():
      print()

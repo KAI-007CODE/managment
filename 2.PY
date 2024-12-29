@@ -441,6 +441,8 @@ def user():
                user()
      else:
           print("INVALID CHOICE !!!")
+          time.sleep(2)
+          user()
 
 
 user()
